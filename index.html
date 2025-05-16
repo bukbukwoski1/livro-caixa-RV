@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livro de Caixa Diário RV Confecções</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Livro Caixa Diário</h1>
+
+        <form id="form-movimentacao">
+            <input type="date" id="data" required>
+            <input type="text" id="descricao" placeholder="Descrição" required>
+            <select id="tipo" required>
+                <option value="" disabled selected>Tipo</option>
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saída</option>
+            </select>
+            <input type="number" id="valor" placeholder="Valor (R$)" step="0.01" min="0" required>
+            <button type="submit">Adicionar</button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Valor (R$)</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-movimentacoes">
+                    <!-- Movimentações serão inseridas aqui -->
+                </tbody>
+            </table>
+        </form>
+
+            <div class="totais">
+                <p>Entradas: <span id="total-entradas">R$ 0,00</span></p>
+                <p>Saídas: <span id="total-saidas">R$ 0,00</span></p>
+                <p>Saldo: <span id="saldo">R$ 0,00</span></p>
+            </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
