@@ -24,6 +24,13 @@ h1{
     margin-bottom: 20px;
 }
 
+.container img{
+    max-width: 100px;
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 15px;
+}
+
 form{
     display: flex;
     flex-wrap: wrap;
