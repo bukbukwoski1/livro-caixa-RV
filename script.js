@@ -18,6 +18,8 @@ window.onload = () =>{
         atualizarTabela();
         atualizarTotais();
     }
+    // Espera o DOM terminar de montar antes de preencher a data
+    setTimeout(() => preencherDataUltimaMovimentacao(), 0);
 };
 
 // Evento de envio do formulário
@@ -48,7 +50,9 @@ form.addEventListener('submit', function(event){
     salvarNoLocalStorage();
     atualizarTabela();
     atualizarTotais();
-    form.reset();
+    document.getElementById('descricao').value = '';
+    document.getElementById('tipo').value = '';
+    document.getElementById('valor').value = '';
 });
 
 // Atualiza a tabela com os dados
@@ -108,6 +112,17 @@ function editarMovimentacao(index){
     editando = true;
     indexEditando = index;
     form.querySelector('button').textContent = 'Salvar Edição';
+}
+
+// preenche a data com a data da última movimentação
+function preencherDataUltimaMovimentacao(){
+    if(movimentacoes.length > 0){
+        const ultimaData = movimentacoes.at(-1).data;
+        const campoData = document.getElementById('data');
+        if (campoData){
+            campoData.value = ultimaData;
+        }       
+    }
 }
 
 // Salva no localStorage
