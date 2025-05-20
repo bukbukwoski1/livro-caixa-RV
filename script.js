@@ -41,13 +41,14 @@ form.addEventListener('submit', function(event){
 // Atualiza a tabela com os dados
 function atualizarTabela(){
     tabela.innerHTML = '';
-    movimentacoes.forEach((mov) =>{
+    movimentacoes.forEach((mov, index) =>{
         const linha = document.createElement('tr');
         linha.innerHTML = `
         <td>${mov.data}</td>
         <td>${mov.descricao}</td>
         <td>${mov.tipo.charAt(0).toUpperCase() + mov.tipo.slice(1)}</td>
         <td>R$ ${mov.valor.toFixed(2).replace('.', ',')}</td>
+        <td><button class="btn-excluir" onclick="excluirMovimentacao(${index})">🗑️</button></td>
         `;
         tabela.appendChild(linha);
     });
@@ -68,6 +69,15 @@ function atualizarTotais(){
     totalEntradas.textContent = `R$ ${entradas.toFixed(2).replace('.', ',')}`;
     totalSaidas.textContent = `R$ ${saldoFinal.toFixed(2).replace('.', ',')}`;
     saldo.textContent = `R$ ${saldoFinal.toFixed(2).replace('.', ',')}`;
+}
+
+function excluirMovimentacao(index){
+    if(confirm('Tem certeza que deseja excluir esta movimentação?')){
+        movimentacoes.splice(index, 1);
+        salvarNoLocalStorage();
+        atualizarTabela();
+        atualizarTotais();
+    }
 }
 
 // Salva no localStorage

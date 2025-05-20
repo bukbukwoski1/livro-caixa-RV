@@ -62,6 +62,19 @@ form button:hover{
     background-color: #45a049;
 }
 
+.btn-excluir{
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-excluir:hover{
+    background-color: #e60000;
+}
+
 table{
     width: 100%;
     border-collapse: collapse;
