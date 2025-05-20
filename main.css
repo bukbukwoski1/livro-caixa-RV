@@ -75,6 +75,20 @@ form button:hover{
     background-color: #e60000;
 }
 
+.btn-editar {
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.btn-editar:hover {
+    background-color: #0b7dda;
+}
+
 table{
     width: 100%;
     border-collapse: collapse;

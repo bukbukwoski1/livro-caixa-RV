@@ -1,3 +1,6 @@
+let editando = false;
+let indexEditando = null;
+
 //Seletores
 const form = document.getElementById('form-movimentacao');
 const tabela = document.getElementById('tabela-movimentacoes');
@@ -31,7 +34,17 @@ form.addEventListener('submit', function(event){
         return;
     }
 
-    movimentacoes.push({ data, descricao, tipo, valor});
+    if(editando){
+        // Atualiza a movimentação
+        movimentacoes[indexEditando] = {data, descricao, tipo, valor};
+        editando = false;
+        indexEditando = null;
+        form.querySelector('button').textContent = 'Adicionar';
+    }else{
+        // Adiciona nova movimentação
+        movimentacoes.push({data, descricao, tipo, valor});
+    }
+
     salvarNoLocalStorage();
     atualizarTabela();
     atualizarTotais();
@@ -48,7 +61,10 @@ function atualizarTabela(){
         <td>${mov.descricao}</td>
         <td>${mov.tipo.charAt(0).toUpperCase() + mov.tipo.slice(1)}</td>
         <td>R$ ${mov.valor.toFixed(2).replace('.', ',')}</td>
-        <td><button class="btn-excluir" onclick="excluirMovimentacao(${index})">🗑️</button></td>
+        <td>
+        <button class="btn-editar" onclick="editarMovimentacao(${index})">✏️</button>
+        <button class="btn-excluir" onclick="excluirMovimentacao(${index})">🗑️</button>
+        </td>
         `;
         tabela.appendChild(linha);
     });
@@ -67,10 +83,11 @@ function atualizarTotais(){
     const saldoFinal = entradas - saidas; 
 
     totalEntradas.textContent = `R$ ${entradas.toFixed(2).replace('.', ',')}`;
-    totalSaidas.textContent = `R$ ${saldoFinal.toFixed(2).replace('.', ',')}`;
+    totalSaidas.textContent = `R$ ${saidas.toFixed(2).replace('.', ',')}`;
     saldo.textContent = `R$ ${saldoFinal.toFixed(2).replace('.', ',')}`;
 }
 
+// Exclui movimentações da lista
 function excluirMovimentacao(index){
     if(confirm('Tem certeza que deseja excluir esta movimentação?')){
         movimentacoes.splice(index, 1);
@@ -78,6 +95,19 @@ function excluirMovimentacao(index){
         atualizarTabela();
         atualizarTotais();
     }
+}
+
+// Edita itens da lista
+function editarMovimentacao(index){
+    const mov = movimentacoes[index];
+    document.getElementById('data').value = mov.data;
+    document.getElementById('descricao').value = mov.descricao;
+    document.getElementById('tipo').value = mov.tipo;
+    document.getElementById('valor').value = mov.valor;
+
+    editando = true;
+    indexEditando = index;
+    form.querySelector('button').textContent = 'Salvar Edição';
 }
 
 // Salva no localStorage
