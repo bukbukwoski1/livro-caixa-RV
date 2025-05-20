@@ -29,29 +29,33 @@ form.addEventListener('submit', function(event){
     const data = document.getElementById('data').value;
     const descricao = document.getElementById('descricao').value;
     const tipo = document.getElementById('tipo').value;
+    const formaPagamento = document.getElementById('forma-pagamento').value;
     const valor = parseFloat(document.getElementById('valor').value);
 
-    if (!data || !descricao || !tipo || isNaN(valor)){
+    if (!data || !descricao || !tipo || !formaPagamento || isNaN(valor)){
         alert('Preencha todos os campos corretamente.');
         return;
     }
 
     if(editando){
         // Atualiza a movimentação
-        movimentacoes[indexEditando] = {data, descricao, tipo, valor};
+        movimentacoes[indexEditando] = {data, descricao, tipo, formaPagamento, valor};
         editando = false;
         indexEditando = null;
         form.querySelector('button').textContent = 'Adicionar';
     }else{
         // Adiciona nova movimentação
-        movimentacoes.push({data, descricao, tipo, valor});
+        movimentacoes.push({data, descricao, tipo, formaPagamento, valor});
     }
 
     salvarNoLocalStorage();
     atualizarTabela();
     atualizarTotais();
+
+    //limpa campos
     document.getElementById('descricao').value = '';
     document.getElementById('tipo').value = '';
+    document.getElementById('forma-pagamento').value = '';
     document.getElementById('valor').value = '';
 });
 
@@ -64,6 +68,7 @@ function atualizarTabela(){
         <td>${mov.data}</td>
         <td>${mov.descricao}</td>
         <td>${mov.tipo.charAt(0).toUpperCase() + mov.tipo.slice(1)}</td>
+        <td>${mov.formaPagamento}</td>
         <td>R$ ${mov.valor.toFixed(2).replace('.', ',')}</td>
         <td>
         <button class="btn-editar" onclick="editarMovimentacao(${index})">✏️</button>
@@ -107,6 +112,7 @@ function editarMovimentacao(index){
     document.getElementById('data').value = mov.data;
     document.getElementById('descricao').value = mov.descricao;
     document.getElementById('tipo').value = mov.tipo;
+     document.getElementById('forma-pagamento').value = mov.formaPagamento;
     document.getElementById('valor').value = mov.valor;
 
     editando = true;

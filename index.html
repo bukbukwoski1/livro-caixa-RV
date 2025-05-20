@@ -18,6 +18,15 @@
                 <option value="entrada">Entrada</option>
                 <option value="saida">Saída</option>
             </select>
+
+            <select id="forma-pagamento">
+                <option value="" disabled selected>Forma de pagamento</option>
+                <option value="Crédito">Crédito</option>
+                <option value="Débito">Débito</option>
+                <option value="Pix">Pix</option>
+                <option value="Dinheiro">Dinheiro</option>
+            </select>
+
             <input type="number" id="valor" placeholder="Valor (R$)" step="0.01" min="0" required>
             <button type="submit">Adicionar</button>
         </form>
@@ -28,6 +37,7 @@
                     <th>Data</th>
                     <th>Descrição</th>
                     <th>Tipo</th>
+                    <th>Forma de Pagamento</th>
                     <th>Valor (R$)</th>
                     <th>Ações</th>
                 </tr>
