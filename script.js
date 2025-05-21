@@ -131,6 +131,19 @@ function preencherDataUltimaMovimentacao(){
     }
 }
 
+function salvarFechamentoNoHistorico(data, totalEntradas, totalSaidas, saldo){
+    const novoFechamento = {
+        data,
+        totalEntradas,
+        totalSaidas,
+        saldo
+    };
+
+    let historico =JSON.parse(localStorage.getItem('fechamentoCaixa')) || [];
+    historico.push(novoFechamento);
+    localStorage.setItem('fechamentoCaixa', JSON.stringify(historico));
+}
+
 // Salva no localStorage
 function salvarNoLocalStorage(){
     localStorage.setItem('livroCaixa', JSON.stringify(movimentacoes));
@@ -163,4 +176,7 @@ document.getElementById('btn-fechar-caixa').addEventListener('click', () =>{
     const saldo = entradas - saidas;
 
     alert(`Resumo do dia ${dataSelecionada}:\n\nEntradas: R$ ${entradas.toFixed(2).replace('.',',')}\nSaídas: R$ ${saidas.toFixed(2).replace('.',',')}\nSaldo: R$ ${saldo.toFixed(2).replace('.',',')}`);
+
+    // Salvar no histórico de fechamentos
+    salvarFechamentoNoHistorico(dataSelecionada, entradas, saidas, saldo);
 });
