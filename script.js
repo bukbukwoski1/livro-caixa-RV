@@ -135,3 +135,32 @@ function preencherDataUltimaMovimentacao(){
 function salvarNoLocalStorage(){
     localStorage.setItem('livroCaixa', JSON.stringify(movimentacoes));
 }
+
+// Função de fechamento de caixa
+document.getElementById('btn-fechar-caixa').addEventListener('click', () =>{
+    const dataSelecionada = document.getElementById('data').value;
+
+    if(!dataSelecionada){
+        alert('Selecione uma data para fechar o caixa.');
+        return;
+    }
+
+    const movimentacoesDoDia = movimentacoes.filter(mov => mov.data === dataSelecionada);
+
+    if (movimentacoesDoDia.length === 0){
+        alert('Não há movimentações nesta data.');
+        return;
+    }
+
+    let entradas = 0;
+    let saidas = 0;
+
+    movimentacoesDoDia.forEach(mov =>{
+        if (mov.tipo === 'entrada') entradas += mov.valor;
+        else if(mov.tipo === 'saida') saidas += mov.valor;
+    });
+
+    const saldo = entradas - saidas;
+
+    alert(`Resumo do dia ${dataSelecionada}:\n\nEntradas: R$ ${entradas.toFixed(2).replace('.',',')}\nSaídas: R$ ${saidas.toFixed(2).replace('.',',')}\nSaldo: R$ ${saldo.toFixed(2).replace('.',',')}`);
+});
